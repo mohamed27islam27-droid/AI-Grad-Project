@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guest Academic Planner</title>
+    <style>
+        body {
+            font-family: "Segoe UI";
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #38bdf8;
+        }
+
+        h3 {
+            margin-top: 25px;
+            color: #38bdf8;
+        }
+
+        .group-section {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .course-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: white;
+            border-radius: 5px;
+            padding: 4px;
+        }
+
+        button {
+            background: #38bdf8;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🧑‍🎓 Guest Academic Planner</h2>
+
+<a href="/" style="color:#38bdf8;">⬅ Back to Main System</a>
+<br><br>
+
+<label>Select Specialization:</label>
+<select id="specialization">
+    <option value="IS">IS</option>
+    <option value="IT">IT</option>
+    <option value="AI">AI</option>
+    <option value="CS">CS</option>
+</select>
+
+<br><br>
+
+<label>
+    <input type="checkbox" id="gpaToggle" onchange="toggleGPA()">
+    Enable GPA Calculator
+</label>
+
+<div id="courseContainer"></div>
+
+<button onclick="generatePlan()">Generate Plan</button>
+
+<h3 id="gpaResult"></h3>
+<div id="planResult"></div>
+<div id="planExplanation"></div>
+
+<script>
+
+let gpaEnabled = false;
+let coursesData = [];
+
+function toggleGPA() {
+    gpaEnabled = document.getElementById("gpaToggle").checked;
+    renderCourses();
+}
+
+fetch("/api_courses")
+.then(res => res.json())
+.then(data => {
+    coursesData = data.courses;
+    renderCourses();
+});
+
+function renderCourses() {
+
+    const container = document.getElementById("courseContainer");
+    container.innerHTML = "";
+
+    const grouped = {};
+
+    coursesData.forEach(course => {
+
+        const group = course.group || "OTHER";
+
+        if (!grouped[group]) grouped[group] = [];
+        grouped[group].push(course);
+    });
+
+    Object.keys(grouped).forEach(group => {
+
+        const section = document.createElement("div");
+        section.className = "group-section";
+
+        section.innerHTML = `<h3>${group.replace(/_/g, " ")}</h3>`;
+
+        grouped[group].forEach(course => {
+
+            const row = document.createElement("div");
+            row.className = "course-row";
+
+            row.innerHTML = `
+                <input type="checkbox" value="${course.code}">
+                <span>${course.code} - ${course.name} (${course.credits} cr)</span>
+                ${gpaEnabled ? `<input type="number" min="0" max="100" placeholder="Grade" id="grade_${course.code}">` : ""}
+            `;
+
+            section.appendChild(row);
+        });
+
+        container.appendChild(section);
+    });
+}
+
+function generatePlan() {
+
+    const specialization = document.getElementById("specialization").value;
+
+    const selected = Array.from(document.querySelectorAll("input[type='checkbox']:checked"))
+        .map(cb => cb.value);
+
+    let grades = {};
+
+    if (gpaEnabled) {
+        selected.forEach(code => {
+            const val = document.getElementById("grade_" + code)?.value;
+            if (val) grades[code] = val;
+        });
+    }
+
+    fetch("/guest_plan", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            specialization: specialization,
+            courses: selected,
+            gpa_mode: gpaEnabled,
+            grades: grades
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.gpa !== null)
+            document.getElementById("gpaResult").innerHTML =
+                "Calculated GPA: " + data.gpa;
+
+        document.getElementById("planResult").innerHTML =
+            "<h3>Status: " + data.status + "</h3>" + data.plan;
+
+        document.getElementById("planExplanation").innerHTML =
+            "<h3>AI Explanation</h3>" + data.explanation;
+    });
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+# Environments
+venv/
+env/
+.env
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+build.log
+build_log.txt
+*.log
+
+# Docker data volumes (if they ever get created locally)
+neo4j_data/
+ollama_data/
+
+# OS generated files
+.DS_Store
+Thumbs.db

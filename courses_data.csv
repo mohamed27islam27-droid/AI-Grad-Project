@@ -1,0 +1,104 @@
+code,name,credits,semester,prerequisites,specializations,requirement_group,level_requirement
+AI310,Artificial Intelligence,3,1,CS316,"AI,CS,IS,IT","AI_CORE,CS_CORE,IS_ELECTIVE,IT_CORE",0
+AI320,Convex Optimization Theory,3,1,MA113,AI,AI_CORE,0
+AI330,Machine Learning,3,1,ST112,"AI,CS","AI_CORE,CS_CORE",0
+AI335,Neural Networks and Deep Learning,3,1,AI330,"AI,CS","AI_CORE,CS_ELECTIVE",0
+AI350,Data Visualization,3,x,ST112,"AI,CS","AI_ELECTIVE,CS_ELECTIVE",0
+AI360,Natural Language Processing,3,x,AI310,"AI,CS","AI_CORE,CS_ELECTIVE",0
+AI370,Advanced Machine Learning,3,2,AI330,AI,AI_CORE,0
+AI380,Human Computer Interaction,3,x,AI310,"AI,CS","AI_ELECTIVE,CS_ELECTIVE",0
+AI420,Evolutionary Algorithm,3,2,AI320,AI,AI_CORE,0
+AI430,Computational Intelligence,3,2,AI310,AI,AI_CORE,0
+AI435,Spoken Language Processing,3,x,AI360,AI,AI_ELECTIVE,0
+AI457,Knowledge Representation,3,x,AI310,AI,AI_ELECTIVE,0
+AI460,Natural Language Understanding,3,2,AI360,AI,AI_CORE,0
+AI490,Bioinformatics,3,x,AI310,AI,AI_ELECTIVE,0
+AI496,Selected Topics in Artificial Intelligence,3,x,NONE,AI,AI_ELECTIVE,4
+AI498,Project,6,1,CS251,AI,AI_CORE,0
+CS111,Introduction to Computers,3,1,NONE,GENERAL,FACULTY_CORE,0
+CS112,Programming 1,3,2,CS111,GENERAL,FACULTY_CORE,0
+CS213,Programming 2,3,1,CS112,GENERAL,FACULTY_CORE,0
+CS214,Data Structures,3,1,CS112,GENERAL,FACULTY_CORE,0
+CS221,Logic Design,3,1,NONE,GENERAL,FACULTY_CORE,0
+CS241,Operating Systems 1,3,1,CS112,GENERAL,FACULTY_CORE,0
+CS251,Software Engineering 1,3,2,CS112,GENERAL,FACULTY_CORE,0
+CS313,Programming 3,3,1,CS213,GENERAL,FACULTY_CHOOSE_3,0
+CS316,Algorithms,3,2,CS214,GENERAL,FACULTY_CORE,0
+CS322,Computer Organization,3,1,CS221,CS,CS_CORE,0
+CS342,Operating Systems 2,3,1,CS241,CS,CS_CORE,0
+CS352,Software Engineering 2,3,2,CS251,"CS,IS,IT","CS_CORE,IS_ELECTIVE,IT_ELECTIVE",0
+CS405,Theory of Computation,3,2,MA112,CS,CS_CORE,0
+CS410,Concepts of Programming Languages,3,1,CS112,CS,CS_ELECTIVE,0
+CS416,Advanced Algorithms,3,x,CS316,"AI,CS","AI_ELECTIVE,CS_ELECTIVE",0
+CS419,Compilers,3,2,CS214,CS,CS_CORE,0
+CS460,Distributed Systems and Cloud Computing,3,2,IT222,"AI,CS","AI_ELECTIVE,CS_CORE",0
+CS471,Parallel Processing and High Performance Computing,3,1,CS241,"AI,CS","AI_ELECTIVE,CS_CORE",0
+CS480,Cryptography,3,x,ST121,"AI,CS","AI_ELECTIVE,CS_ELECTIVE",0
+CS496,Selected Topics in Computer Science,3,x,NONE,CS,CS_ELECTIVE,4
+CS498,Project,6,1,CS251,CS,CS_CORE,0
+HU111,English 1,2,1,NONE,GENERAL,UNIVERSITY_MANDATORY,0
+HU112,English 2,2,2,NONE,GENERAL,UNIVERSITY_MANDATORY,0
+HU121,Fundamentals of Economics,3,2,NONE,GENERAL,UNIVERSITY_CHOOSE_2,0
+HU122,Fundamentals of Management,3,2,NONE,GENERAL,FACULTY_CHOOSE_3,0
+HU313,Human Rights,2,1,NONE,GENERAL,UNIVERSITY_MANDATORY,0
+HU323,Fundamentals of Accounting,3,1,NONE,GENERAL,UNIVERSITY_CHOOSE_2,0
+HU334,Professional Ethics,3,1,NONE,GENERAL,UNIVERSITY_CHOOSE_2,0
+IS211,Database System 1,3,1,NONE,GENERAL,FACULTY_CORE,0
+IS231,Fundamentals of Information Systems,3,1,NONE,GENERAL,FACULTY_CORE,0
+IS240,Operation Research,3,2,NONE,GENERAL,FACULTY_CORE,0
+IS241,Modeling and Simulation,3,2,NONE,GENERAL,FACULTY_CHOOSE_3,0
+IS312,Database Systems 2,3,1,IS211,"AI,CS,IS,IT","AI_ELECTIVE,CS_ELECTIVE,IS_CORE,IT_ELECTIVE",0
+IS313,Data Storage and Retrieval,3,1,IS211,IS,IS_CORE,0
+IS321,Project Management,3,2,IS240,GENERAL,FACULTY_CHOOSE_3,0
+IS333,Management Information System,3,2,IS231,IS,IS_CORE,0
+IS345,Internet Applications,3,2,IT223,"IS,IT","IS_CORE,IT_ELECTIVE",0
+IS350,Business Intelligence and Data Analytics,3,1,ST112,IS,IS_CORE,0
+IS351,System Analysis and Design 1,3,2,NONE,GENERAL,FACULTY_CORE,0
+IS352,Analysis and Design of Information Systems 2,3,2,IS351,IS,IS_CORE,0
+IS360,Introduction to Data Science,3,1,IS312,"AI,IS","AI_ELECTIVE,IS_CORE",0
+IS365,Big Data Technologies,3,1,IS211,"AI,IS","AI_CORE,IS_CORE",0
+IS414,Information System Security,3,1,IS211,IS,IS_CORE,0
+IS421,Data Mining,3,1,IS211,IS,IS_ELECTIVE,0
+IS422,Data Warehousing,3,2,IS211,IS,IS_ELECTIVE,0
+IS434,Quality Assurance of Information Systems and Programming,3,1,IS352,IS,IS_ELECTIVE,0
+IS435,Information Centers Management,3,2,NONE,IS,IS_ELECTIVE,0
+IS448,Knowledge Base Management,3,2,IS312,IS,IS_CORE,0
+IS451,Decision Support System,3,2,IS231,IS,IS_CORE,0
+IT111,Electronics 1,3,2,NONE,GENERAL,FACULTY_CORE,0
+IT221,Data Communication,3,1,ST121,GENERAL,FACULTY_CORE,0
+IT222,Computer Networks 1,3,2,IT221,GENERAL,FACULTY_CORE,0
+IT223,Internet Technology,3,2,NONE,GENERAL,FACULTY_CORE,0
+IT241,Signals and Systems,3,2,MA113,GENERAL,FACULTY_CHOOSE_3,0
+IT311,Computer Architecture,3,1,CS221,IT,IT_CORE,0
+IT312,Microprocessors,3,2,CS221,"AI,CS,IT","AI_ELECTIVE,CS_ELECTIVE,IT_ELECTIVE",0
+IT313,Computer Interfaces,3,x,IT322,IT,IT_ELECTIVE,0
+IT321,Communication Technology,3,1,IT221,IT,IT_CORE,0
+IT322,Computer Network 2,3,1,IT222,IT,IT_CORE,0
+IT331,Computer Graphics 1,3,2,CS112,"CS,IT","CS_CORE,IT_CORE",0
+IT332,Computer Graphics 2,3,x,IT331,IT,IT_ELECTIVE,0
+IT341,Digital Signal Processing,3,1,MA112,"AI,IT","AI_ELECTIVE,IT_CORE",0
+IT342,Pattern Recognition,3,2,NONE,"CS,IT","CS_ELECTIVE,IT_CORE",0
+IT411,Distributed and Parallel Computer Systems,3,x,IT311,IT,IT_ELECTIVE,0
+IT412,Real Time Systems,3,x,IT311,IT,IT_ELECTIVE,0
+IT414,Embedded Systems,3,x,IT312,"AI,CS,IT","AI_ELECTIVE,CS_ELECTIVE,IT_ELECTIVE",0
+IT415,Robotics,3,2,MA112,"AI,IT","AI_ELECTIVE,IT_ELECTIVE",0
+IT422,Wireless and Mobile Networks,3,x,IT322,IT,IT_ELECTIVE,0
+IT423,Information and Computer Network Security,3,2,IT222,"CS,IS,IT","CS_CORE,IS_ELECTIVE,IT_CORE",0
+IT425,Embedded Internet of Things System,3,x,IT414,"AI,IT","AI_ELECTIVE,IT_ELECTIVE",0
+IT431,Virtual Reality,3,x,IT331,IT,IT_ELECTIVE,0
+IT433,Multimedia,3,1,CS112,"CS,IT","CS_ELECTIVE,IT_CORE",0
+IT441,Image Processing 1,3,1,IT241,"AI,CS,IT","AI_CORE,CS_ELECTIVE,IT_CORE",0
+IT442,Image Processing 2,3,x,IT441,IT,IT_ELECTIVE,0
+IT443,Speech Processing,3,2,IT241,"AI,IT","AI_ELECTIVE,IT_ELECTIVE",0
+IT444,Computer Vision,3,2,CS316,"AI,CS,IT","AI_ELECTIVE,CS_ELECTIVE,IT_CORE",0
+IT455,Image Audio and Video Processing,3,x,IT443,IT,IT_ELECTIVE,0
+IT456,3D Modeling and Animation,3,x,IT331,IT,IT_ELECTIVE,0
+IT457,Game Development,3,x,IT331,IT,IT_ELECTIVE,0
+IT496,Selected Topics in Information Technology,3,1,NONE,IT,IT_ELECTIVE,4
+IT498,Project,6,1,IT222,IT,IT_CORE,0
+MA111,Mathematics 1,3,1,NONE,GENERAL,FACULTY_CORE,0
+MA112,Discrete Mathematics,3,2,NONE,GENERAL,FACULTY_CORE,0
+MA113,Mathematics 2,3,2,MA111,GENERAL,FACULTY_CORE,0
+PH111,Physics,3,1,NONE,GENERAL,FACULTY_CORE,0
+ST112,Probability and Statistics 2,3,2,ST121,GENERAL,FACULTY_CHOOSE_3,0
+ST121,Probability and Statistics 1,3,1,NONE,GENERAL,FACULTY_CORE,0

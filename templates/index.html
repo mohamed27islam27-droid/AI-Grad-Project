@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Academic Decision System</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        h2 {
+            text-align: center;
+            padding: 20px;
+            color: #38bdf8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(56,189,248,0.15);
+        }
+
+        h3 {
+            color: #38bdf8;
+        }
+
+        input, select, textarea {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 5px 0;
+            width: 100%;
+        }
+
+        button {
+            background: #38bdf8;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        .loading {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .section-divider {
+            border-top: 1px solid #334155;
+            margin: 20px 0;
+        }
+
+        .nav-button {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🤖 AI Academic Decision Support System</h2>
+
+<div class="container">
+
+<!-- ========================= -->
+<!-- NAVIGATION -->
+<!-- ========================= -->
+<div class="nav-button">
+    <a href="/guest">
+        <button>🧑‍🎓 Go to Guest Mode</button>
+    </a>
+</div>
+
+
+<!-- ========================= -->
+<!-- EXISTING STUDENT PLANNER -->
+<!-- ========================= -->
+<div class="card">
+    <h3>🎓 Generate Graduation Plan (Existing Student)</h3>
+
+    <select id="studentSelect">
+        <option value="Ali">Ali (IS)</option>
+        <option value="Ahmed">Ahmed (IT)</option>
+        <option value="Aser">Aser (AI)</option>
+        <option value="Amr">Amr (CS)</option>
+    </select>
+
+    <button onclick="generatePlan()">Generate Plan</button>
+
+    <div id="planResult"></div>
+    <div class="section-divider"></div>
+    <div id="planExplanation"></div>
+</div>
+
+
+<!-- ========================= -->
+<!-- GRADE PREDICTOR -->
+<!-- ========================= -->
+<div class="card">
+    <h3>📊 Grade Prediction</h3>
+
+    <label>Coursework (0–25)</label>
+    <input type="number" id="coursework">
+
+    <label>Midterm (0–25)</label>
+    <input type="number" id="midterm">
+
+    <button onclick="predictGrade()">Predict</button>
+
+    <div id="gradeResult"></div>
+</div>
+
+
+<!-- ========================= -->
+<!-- SUMMARIZER -->
+<!-- ========================= -->
+<div class="card">
+    <h3>📝 AI Summarizer</h3>
+
+    <textarea id="textInput" rows="6"></textarea>
+    <button onclick="summarizeText()">Summarize</button>
+
+    <div id="summaryResult"></div>
+</div>
+
+</div>
+
+
+<script>
+
+// =======================
+// Existing Student Planner
+// =======================
+function generatePlan() {
+    const student = document.getElementById("studentSelect").value;
+
+    document.getElementById("planResult").innerHTML =
+        "<p class='loading'>Generating plan...</p>";
+
+    fetch("/generate_plan", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({student: student})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("planResult").innerHTML =
+            "<h4>Status: " + data.status + "</h4>" + data.plan;
+
+        document.getElementById("planExplanation").innerHTML =
+            "<h4>AI Explanation</h4>" + data.explanation;
+    });
+}
+
+
+// =======================
+// Grade Predictor
+// =======================
+function predictGrade() {
+
+    document.getElementById("gradeResult").innerHTML =
+        "<p class='loading'>Predicting...</p>";
+
+    fetch("/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            coursework: document.getElementById("coursework").value,
+            midterm: document.getElementById("midterm").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("gradeResult").innerHTML = data.result;
+    });
+}
+
+
+// =======================
+// Summarizer
+// =======================
+function summarizeText() {
+
+    document.getElementById("summaryResult").innerHTML =
+        "<p class='loading'>Summarizing...</p>";
+
+    fetch("/summarize", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            text: document.getElementById("textInput").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("summaryResult").innerHTML = data.result;
+    });
+}
+
+</script>
+
+</body>
+</html>
