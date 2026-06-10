@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, jsonify
 from flasgger import Swagger
 from llm_wrapper import summarize_text
-from planner_advanced import generate_advanced_plan
+from planner_v2 import generate_advanced_plan
 from neo4j import GraphDatabase
 import pickle
 import numpy as np
 import requests
 import os
+from pymongo import MongoClient
+import bcrypt
+import jwt
+import datetime
 
 app = Flask(__name__)
 # Initialize Swagger
@@ -41,6 +45,17 @@ PASSWORD = os.getenv("NEO4J_PASSWORD", "12345678")
 
 driver = GraphDatabase.driver(URI, auth=(USERNAME, PASSWORD))
 
+# ==========================================
+# MongoDB Config
+# ==========================================
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27018/gp_backend")
+JWT_SECRET = os.getenv("JWT_SECRET", "super_secret_jwt_key")
+try:
+    mongo_client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    db = mongo_client.get_database()
+    users_collection = db.users
+except Exception as e:
+    print(f"MongoDB Connection Error: {e}")
 
 # ==========================================
 # Load ML Model
@@ -88,6 +103,93 @@ def calculate_weighted_gpa(course_grades):
 
     return round(total_points / total_credits, 2)
 
+
+# ==========================================
+# Authentication
+# ==========================================
+@app.route("/api/auth/register", methods=["POST"])
+def register():
+    """
+    Register a new user
+    ---
+    consumes:
+      - application/json
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+    responses:
+      201:
+        description: User registered successfully
+    """
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+    
+    if not username or not password:
+        return jsonify({"msg": "Username and password required"}), 400
+        
+    if users_collection.find_one({"username": username}):
+        return jsonify({"msg": "User already exists"}), 400
+        
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    
+    users_collection.insert_one({
+        "username": username,
+        "password": hashed_password.decode('utf-8'),
+        "created_at": datetime.datetime.now(datetime.timezone.utc)
+    })
+    
+    return jsonify({"msg": "User registered successfully"}), 201
+
+@app.route("/api/auth/login", methods=["POST"])
+def login():
+    """
+    Login a user
+    ---
+    consumes:
+      - application/json
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+    responses:
+      200:
+        description: Login successful
+    """
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+    
+    user = users_collection.find_one({"username": username})
+    
+    if not user or not bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
+        return jsonify({"msg": "Invalid credentials"}), 401
+        
+    token = jwt.encode({
+        "username": username,
+        "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=12)
+    }, JWT_SECRET, algorithm="HS256")
+    
+    return jsonify({
+        "msg": "Login successful",
+        "token": token,
+        "user": {"username": username}
+    }), 200
 
 # ==========================================
 # Home + Guest Pages

@@ -10,7 +10,11 @@ services:
       - NEO4J_USER=neo4j
       - NEO4J_PASSWORD=12345678
       - OLLAMA_URL=http://ollama:11434
+      - MONGO_URI=mongodb://mongodb:27017/gp_backend
+      - JWT_SECRET=super_secret_jwt_key
     depends_on:
+      mongodb:
+        condition: service_started
       neo4j:
         condition: service_healthy
       ollama:
@@ -40,6 +44,15 @@ services:
     volumes:
       - ollama_data:/root/.ollama
 
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27018:27017" # using 27018 to avoid conflict with the other project if it's running
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
 volumes:
   neo4j_data:
   ollama_data:
+  mongodb_data:
